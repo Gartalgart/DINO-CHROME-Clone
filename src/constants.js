@@ -1,6 +1,8 @@
 export const GAME_WIDTH = 800;
 export const GAME_HEIGHT = 400;
 export const GROUND_LEVEL = 300;
+export const CANVAS_COLOR = "#5F9EA0";
+export const GROUND_COLOR = "#a34719";
 
 export const OBSTACLE_SIZE = 40;
 export const BIRD_SIZE = 40;

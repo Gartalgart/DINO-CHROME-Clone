@@ -8,7 +8,9 @@ import {
   DINO_X,
   DINO_SIZE,
   GROUND_LEVEL,
-  BACKGROUND_IMAGE,
+  CANVAS_COLOR,
+  GROUND_COLOR,
+  // BACKGROUND_IMAGE,
 } from "./constants.js";
 
 export default class Game {
@@ -61,12 +63,12 @@ export default class Game {
   update() {
     //Nettoie l'écran lors de l'appel de update
     this.context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-    if (BACKGROUND_IMAGE.complete) {
-      this.context.drawImage(BACKGROUND_IMAGE, 0, 0, GAME_WIDTH, GAME_HEIGHT);
-    }
+    //Coleur du background
+    this.context.fillStyle = CANVAS_COLOR;
+    this.context.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
     this.drawScore();
     //Définie la couleur verte
-    this.context.fillStyle = "brown";
+    this.context.fillStyle = GROUND_COLOR;
     //Dessine un rectangle à partir de GROUND_LEVEL de largeur GAME_WITH et de hauteur GAME_height
     this.context.fillRect(
       0,
@@ -93,7 +95,7 @@ export default class Game {
   }
 
   drawScore() {
-    this.context.fontStyle = "40px Arial";
+    this.context.font = "24px Arial";
     this.context.fillStyle = "#ffffff";
     this.context.fillText(`Score: ${this.score}`, 10, 30);
   }

@@ -1,5 +1,5 @@
 import Game from "./src/Game.js";
-import { GAME_WIDTH, GAME_HEIGHT, BACKGROUND_IMAGE } from "./src/constants.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "./src/constants.js";
 
 const canvas = document.querySelector("canvas");
 //console.log({ canvas });
@@ -13,17 +13,19 @@ const frame = () => {
     game.update(); // Nettois le canvas
     requestAnimationFrame(frame); //Re-demande une frame
   } else {
-    context.font = "64px Arial bold";
+    context.font = "bold 64px Arial";
     context.fillStyle = "#ff0000";
     context.fillText("GAME OVER !", GAME_WIDTH / 4, GAME_HEIGHT / 2);
   }
 };
 
-BACKGROUND_IMAGE.onload = () => {
-  requestAnimationFrame(frame);
-};
+requestAnimationFrame(frame);
 
-BACKGROUND_IMAGE.onerror = () => {
-  console.error("Background image failed to load.");
-  requestAnimationFrame(frame); // Optionally start without background
-};
+// BACKGROUND_IMAGE.onload = () => {
+//   requestAnimationFrame(frame);
+// };
+
+// BACKGROUND_IMAGE.onerror = () => {
+//   console.error("Background image failed to load.");
+//   requestAnimationFrame(frame); // Optionally start without background
+// };
