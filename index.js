@@ -4,14 +4,23 @@ import { GAME_WIDTH, GAME_HEIGHT } from "./src/constants.js";
 const canvas = document.querySelector("canvas");
 //console.log({ canvas });
 
-const context = canvas.getContext("2d");
+let context = canvas.getContext("2d");
 
-const game = new Game(context);
+const restartbtn = document.getElementById("btn");
+
+let game = new Game(context);
+let animationId = null;
+
+document.addEventListener("keydown", () => {
+  if (game && game.dino && game.play) {
+    game.dino.jump();
+  }
+});
 
 const frame = () => {
   if (game.play) {
     game.update(); // Nettois le canvas
-    requestAnimationFrame(frame); //Re-demande une frame
+    animationId = requestAnimationFrame(frame); //Re-demande une frame
   } else {
     context.font = "bold 64px Arial";
     context.fillStyle = "#ff0000";
@@ -19,13 +28,14 @@ const frame = () => {
   }
 };
 
-requestAnimationFrame(frame);
+restartbtn.addEventListener("click", () => {
+  //console.log("click");
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+  }
+  game = new Game(context);
+  frame();
+  restartbtn.blur();
+});
 
-// BACKGROUND_IMAGE.onload = () => {
-//   requestAnimationFrame(frame);
-// };
-
-// BACKGROUND_IMAGE.onerror = () => {
-//   console.error("Background image failed to load.");
-//   requestAnimationFrame(frame); // Optionally start without background
-// };
+frame();
