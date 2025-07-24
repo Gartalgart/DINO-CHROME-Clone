@@ -1,5 +1,5 @@
 import Game from "./src/Game.js";
-import { GAME_WIDTH, GAME_HEIGHT } from "./src/constants.js";
+import { GAME_WIDTH, GAME_HEIGHT, BACKGROUND_IMAGE } from "./src/constants.js";
 
 const canvas = document.querySelector("canvas");
 //console.log({ canvas });
@@ -19,8 +19,11 @@ const frame = () => {
   }
 };
 
-/*La méthode requestAnimationFrame() sert à créer une boucle d’animation
-fluide et optimisée dans un navigateur, en synchronisant l'exécution
-d'une fonction avec le taux de rafraîchissement de l'écran (généralement
-60 images par seconde). */
-requestAnimationFrame(frame);
+BACKGROUND_IMAGE.onload = () => {
+  requestAnimationFrame(frame);
+};
+
+BACKGROUND_IMAGE.onerror = () => {
+  console.error("Background image failed to load.");
+  requestAnimationFrame(frame); // Optionally start without background
+};

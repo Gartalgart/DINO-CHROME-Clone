@@ -15,3 +15,6 @@ BIRD_IMAGE.src = "./assets/bird.png";
 
 export const OBSTACLE_IMAGE = new Image();
 OBSTACLE_IMAGE.src = "./assets/obstacle.png";
+
+export const BACKGROUND_IMAGE = new Image();
+BACKGROUND_IMAGE.src = "./assets/canvasBackground.jpg";
