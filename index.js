@@ -23,6 +23,18 @@ window.addEventListener("resize", () => {
 let context = canvas.getContext("2d");
 
 const restartbtn = document.getElementById("btn");
+const fullscreenBtn = document.getElementById("fullscreenBtn"); // Add this line
+
+fullscreenBtn.addEventListener("click", () => {
+  const canvas = document.querySelector("canvas");
+  if (canvas.requestFullscreen) {
+    canvas.requestFullscreen();
+  } else if (canvas.webkitRequestFullscreen) {
+    canvas.webkitRequestFullscreen();
+  } else if (canvas.msRequestFullscreen) {
+    canvas.msRequestFullscreen();
+  }
+});
 
 let game = new Game(context, canvas.width, canvas.height);
 let gameOverSoundEffect = new Audio("./audios/game_over.wav");
