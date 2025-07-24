@@ -23,16 +23,16 @@ window.addEventListener("resize", () => {
 let context = canvas.getContext("2d");
 
 const restartbtn = document.getElementById("btn");
-const fullscreenBtn = document.getElementById("fullscreenBtn"); // Add this line
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const gameWrapper = document.getElementById("container");
 
 fullscreenBtn.addEventListener("click", () => {
-  const canvas = document.querySelector("canvas");
-  if (canvas.requestFullscreen) {
-    canvas.requestFullscreen();
-  } else if (canvas.webkitRequestFullscreen) {
-    canvas.webkitRequestFullscreen();
-  } else if (canvas.msRequestFullscreen) {
-    canvas.msRequestFullscreen();
+  if (gameWrapper.requestFullscreen) {
+    gameWrapper.requestFullscreen();
+  } else if (gameWrapper.webkitRequestFullscreen) {
+    gameWrapper.webkitRequestFullscreen();
+  } else if (gameWrapper.msRequestFullscreen) {
+    gameWrapper.msRequestFullscreen();
   }
 });
 
