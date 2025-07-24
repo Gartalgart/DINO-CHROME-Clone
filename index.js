@@ -2,17 +2,40 @@ import Game from "./src/Game.js";
 import { GAME_WIDTH, GAME_HEIGHT } from "./src/constants.js";
 
 const canvas = document.querySelector("canvas");
-//console.log({ canvas });
+
+const resizeCanvas = () => {
+  let width = Math.min(window.innerWidth, 800);
+  let height = Math.min(window.innerHeight, 400);
+
+  if (height > width) {
+    [width, height] = [height, width];
+  }
+
+  canvas.width = width;
+  canvas.height = height;
+};
+
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  game = new Game(context, canvas.width, canvas.height);
+});
 
 let context = canvas.getContext("2d");
 
 const restartbtn = document.getElementById("btn");
 
-let game = new Game(context);
+let game = new Game(context, canvas.width, canvas.height);
 let gameOverSoundEffect = new Audio("./audios/game_over.wav");
 let animationId = null;
 
 document.addEventListener("keydown", () => {
+  if (game && game.dino && game.play) {
+    game.dino.jump();
+  }
+});
+
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault();
   if (game && game.dino && game.play) {
     game.dino.jump();
   }
@@ -35,7 +58,7 @@ restartbtn.addEventListener("click", () => {
   if (animationId) {
     cancelAnimationFrame(animationId);
   }
-  game = new Game(context);
+  game = new Game(context, canvas.width, canvas.height);
   frame();
   restartbtn.blur(); //Cela signifie que le bouton Restart perd le focus immédiatement après avoir été cliqué.
 });

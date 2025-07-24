@@ -14,8 +14,10 @@ import {
 } from "./constants.js";
 
 export default class Game {
-  constructor(context) {
+  constructor(context, width, height) {
     this.context = context;
+    this.width = width;
+    this.height = height;
     this.dino = new Dino(DINO_X, GROUND_LEVEL + 5);
     this.entities = [this.dino];
     this.score = 0;
