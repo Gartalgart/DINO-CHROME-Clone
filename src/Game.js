@@ -20,13 +20,15 @@ export default class Game {
     this.entities = [this.dino];
     this.score = 0;
     this.speed = 5;
+    this.bonusText = null;
+    this.soundEffectBonus = new Audio("./audios/bonus.wav");
     this.play = true;
 
     this.spawnObstacle();
 
-    document.addEventListener("keydown", () => {
-      this.dino.jump();
-    });
+    // document.addEventListener("keydown", () => {
+    //   this.dino.jump();
+    // });
 
     this.scoreInterval = setInterval(() => {
       this.increseScore();
@@ -82,15 +84,38 @@ export default class Game {
       entity.draw(this.context);
     });
 
-    const isCollides = this.entities.some((entity) => {
-      if (entity === this.dino) return false;
-      return collides(this.dino, entity);
-    });
+    if (this.bonusText && this.bonusText.timer > 0) {
+      this.context.font = "bold 24px Arial";
+      this.context.fillStyle = "#ffff00";
+      this.context.fillText("+10", this.bonusText.x, this.bonusText.y);
+      this.bonusText.timer--;
+    } else if (this.bonusText && this.bonusText.timer <= 0) {
+      this.bonusText = null;
+    }
 
-    if (isCollides) {
-      this.play = false;
-      clearInterval(this.scoreInterval);
-      clearInterval(this.speedInterval);
+    for (let i = 0; i < this.entities.length; i++) {
+      const entity = this.entities[i];
+      if (entity === this.dino) continue;
+
+      if (collides(this.dino, entity)) {
+        if (entity instanceof Bird) {
+          this.score += 10;
+          this.bonusText = {
+            x: this.dino.x + 10,
+            y: this.dino.y - 10,
+            timer: 60,
+          };
+          this.soundEffectBonus.currentTime = 0;
+          this.soundEffectBonus.play();
+          this.entities.splice(i, 1); //Retire bird de entities
+          i--; //Ajuste l'index en conséquence
+        } else if (entity instanceof Obstacle) {
+          this.play = false;
+          clearInterval(this.scoreInterval);
+          clearInterval(this.speedInterval);
+          break;
+        }
+      }
     }
   }
 

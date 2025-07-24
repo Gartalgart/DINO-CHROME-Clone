@@ -9,6 +9,7 @@ let context = canvas.getContext("2d");
 const restartbtn = document.getElementById("btn");
 
 let game = new Game(context);
+let gameOverSoundEffect = new Audio("./audios/game_over.wav");
 let animationId = null;
 
 document.addEventListener("keydown", () => {
@@ -22,6 +23,7 @@ const frame = () => {
     game.update(); // Nettois le canvas
     animationId = requestAnimationFrame(frame); //Re-demande une frame
   } else {
+    gameOverSoundEffect.play();
     context.font = "bold 64px Arial";
     context.fillStyle = "#ff0000";
     context.fillText("GAME OVER !", GAME_WIDTH / 4, GAME_HEIGHT / 2);
@@ -35,7 +37,7 @@ restartbtn.addEventListener("click", () => {
   }
   game = new Game(context);
   frame();
-  restartbtn.blur();
+  restartbtn.blur(); //Cela signifie que le bouton Restart perd le focus immédiatement après avoir été cliqué.
 });
 
 frame();
